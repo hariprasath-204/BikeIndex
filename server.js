@@ -21,13 +21,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 if (!fs.existsSync("./uploads")) fs.mkdirSync("./uploads");
 
 // ----------------------
-// MySQL Database Connection
+// MySQL Connection Pool
 // ----------------------
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "nodeuser", // change to your MySQL username
-  password: "test123", // change to your MySQL password
-  database: "rkbikes"
+const db = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.DB_HOST || "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+    user: process.env.DB_USER || "29AbDUEYRffWpr9.root",
+    password: process.env.DB_PASS || "Y6CltcwzarqPh1ga",
+    database: process.env.DB_NAME || "rkbikes",
+    port: process.env.DB_PORT || 4000, // TiDB Cloud default
+    ssl: { rejectUnauthorized: true }, // ✅ required for TiDB
 });
 
 db.connect(err => {
@@ -785,14 +788,8 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-app.listen(3000, '0.0.0.0', () => {
-  console.log("Server running at http://<your-local-ip>:3000");
-});
+const PORT = process.env.PORT || 4000;
 
-// ----------------------
-// Start Server
-// ----------------------
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
 });
