@@ -29,7 +29,7 @@ const db = mysql.createPool({
     user: process.env.DB_USER || "29AbDUEYRffWpr9.root",
     password: process.env.DB_PASS || "Y6CltcwzarqPh1ga",
     database: process.env.DB_NAME || "rkbikes",
-    port: process.env.DB_PORT || 3000, // TiDB Cloud default
+    port: process.env.DB_PORT || 4000, // TiDB Cloud default
     ssl: { rejectUnauthorized: true }, // ✅ required for TiDB
 });
 
@@ -789,7 +789,7 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
