@@ -33,13 +33,17 @@ const db = mysql.createPool({
     ssl: { rejectUnauthorized: true }, // ✅ required for TiDB
 });
 
-db.connect(err => {
-  if (err) {
-    console.error("Database connection failed:", err);
-    process.exit(1);
-  }
-  console.log("Connected to MySQL database ✅");
-});
+// Test the connection
+db.getConnection()
+    .then(conn => {
+        console.log("✅ Connected to MySQL Database");
+        conn.release();
+    })
+    .catch(err => {
+        console.error("❌ MySQL Connection Failed:", err);
+        process.exit(1);
+    });
+
 // ----------------------
 // Serve Static Files
 // ----------------------
