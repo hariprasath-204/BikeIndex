@@ -4,122 +4,95 @@ function togglePassword(fieldId) {
   input.type = input.type === "password" ? "text" : "password";
 }
 
-
+// Show register modal programmatically
+function showRegisterModal() {
+  const loginModal = bootstrap.Modal.getInstance(document.getElementById("loginModal"));
+  loginModal.hide();
+  const registerModal = new bootstrap.Modal(document.getElementById("registerModal"));
+  registerModal.show();
+}
 
 // --------------------
-// REGISTER (Connected to Server)
+// REGISTER
 // --------------------
-document.getElementById("registerForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-  // --- Get form data ---
-  const first_name = document.getElementById("registerFirstName").value.trim();
-  const last_name = document.getElementById("registerLastName").value.trim();
-  const email = document.getElementById("registerEmail").value.trim();
-  const phone = document.getElementById("registerPhone").value.trim();
-  const password = document.getElementById("registerPassword").value;
-  const confirmPassword = document.getElementById("registerConfirmPassword").value;
-  const gender = document.getElementById("registerGender").value;
-  const agree = document.getElementById("agreeTerms").checked;
-  const errorDiv = document.getElementById("registerError");
+  const firstName = document.getElementById("registerFirstName").value.trim();
+  const lastName = document.getElementById("registerLastName").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const phone = document.getElementById("registerPhone").value.trim();
+  const password = document.getElementById("registerPassword").value;
+  const confirmPassword = document.getElementById("registerConfirmPassword").value;
+  const gender = document.getElementById("registerGender").value;
+  const agree = document.getElementById("agreeTerms").checked;
 
-  // --- Basic validation ---
-  if (password !== confirmPassword) {
-    errorDiv.textContent = "Passwords do not match!";
-    errorDiv.classList.remove("d-none");
-    return;
-  }
-  if (!agree) {
-    errorDiv.textContent = "You must agree to the Terms & Conditions.";
-    errorDiv.classList.remove("d-none");
-    return;
-  }
+  const errorDiv = document.getElementById("registerError");
+  errorDiv.classList.add("d-none");
 
-  // --- Send data to the server ---
-  try {
-    const response = await fetch('http://localhost:4000/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        first_name,
-        last_name,
-        email,
-        phone,
-        password,
-        gender
-      })
-    });
+  if (password !== confirmPassword) {
+    errorDiv.textContent = "Passwords do not match!";
+    errorDiv.classList.remove("d-none");
+    return;
+  }
 
-    const result = await response.json();
+  if (!agree) {
+    errorDiv.textContent = "You must agree to the Terms & Conditions.";
+    errorDiv.classList.remove("d-none");
+    return;
+  }
 
-    if (!response.ok) {
-      // If server returns an error (like "Email already exists")
-      throw new Error(result.error || 'Registration failed');
-    }
 
-    // --- Handle success ---
-    alert("✅ Registration successful! Please login.");
-    this.reset();
-    showLoginModal(); // Helper function to switch modals
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  if (users.find(u => u.email === email)) {
+    errorDiv.textContent = "Email already registered!";
+    errorDiv.classList.remove("d-none");
+    return;
+  }
 
-  } catch (error) {
-    // --- Handle errors ---
-    errorDiv.textContent = error.message;
-    errorDiv.classList.remove("d-none");
-  }
+  users.push({ firstName, lastName, email, phone, password, gender });
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("✅ Registration successful! Please login.");
+  this.reset();
+
+  // Switch to login modal
+  const registerModal = bootstrap.Modal.getInstance(document.getElementById("registerModal"));
+  registerModal.hide();
+  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+  loginModal.show();
 });
 
-// Helper function to switch from Register to Login modal
-function showLoginModal() {
-  const registerModal = bootstrap.Modal.getInstance(document.getElementById("registerModal"));
-  registerModal.hide();
-  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-  loginModal.show();
-}
 // --------------------
 // LOGIN
 // --------------------
-// --------------------
-// LOGIN (Connected to Server)
-// --------------------
-document.getElementById("loginForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-  const errorDiv = document.getElementById("loginError");
-  errorDiv.classList.add("d-none");
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  const errorDiv = document.getElementById("loginError");
+  errorDiv.classList.add("d-none");
 
-  try {
-    const response = await fetch('http://localhost:4000/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    });
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(u => u.email === email && u.password === password);
 
-    const result = await response.json();
+  if (!user) {
+    errorDiv.textContent = "Invalid email or password!";
+    errorDiv.classList.remove("d-none");
+    return;
+  }
 
-    if (!response.ok) {
-      // If server returns an error (like "Invalid credentials")
-      throw new Error(result.error || 'Login failed');
-    }
+  // Save logged-in user session
+  localStorage.setItem("currentUser", JSON.stringify(user));
 
-    // --- Handle success ---
-    // IMPORTANT: Save the token from the server
-    localStorage.setItem("token", result.token);
+  alert("🎉 Login successful! Welcome " + user.firstName);
 
-    alert("🎉 Login successful! Welcome back.");
+  // Close modal
+  const loginModal = bootstrap.Modal.getInstance(document.getElementById("loginModal"));
+  loginModal.hide();
 
-    // Redirect to the main page
-    window.location.href = "index.html";
-
-  } catch (error) {
-    // --- Handle errors ---
-    errorDiv.textContent = error.message;
-    errorDiv.classList.remove("d-none");
-  }
+  // Goto index.html
+  window.location.href = "index.html"; 
+  loadUserProfile();
 });
