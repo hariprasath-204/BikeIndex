@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const multer = require("multer"); // <- Add this line
-
+require("dotenv").config();
 const PDFDocument = require("pdfkit");
 const path = require("path");
 const fs = require("fs");
