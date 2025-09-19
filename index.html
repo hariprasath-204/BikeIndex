@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.K Bajaj - Premium Bike Showroom</title>
+    <link rel="icon" type="image/png" href="images/bajaj-icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-motorcycle me-2"></i>R.K BAJAJ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" >Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="product.html" >Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="service.html" >Services</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="contact.html" >Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="help.html" >Help Center</a></li>
+                </ul>
+                <div class="navbar-nav ms-auto" id="authArea">
+         <div id="authButtons" class="d-flex gap-2">
+  <a href="login.html" class="btn btn-outline-light btn-sm">
+    <i class="fas fa-sign-in-alt me-1"></i> Login
+  </a>
+</div>
+
+            
+          </div>
+          <div id="userArea" class="d-none">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-lg text-white me-2"></i>
+                <span id="userDisplayName"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#profile" onclick="showSection('profile')"><i class="fas fa-user me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#my-bookings" onclick="showSection('my-bookings')"><i class="fas fa-calendar me-2"></i>My Testdrive Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-bookings" onclick="showSection('my-bike-bookings')"><i class="fas fa-calendar me-2"></i>My Bike Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-services" onclick="showSection('my-services')"><i class="fas fa-wrench me-2"></i>My Services</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#settings" onclick="showSection('settings')"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+<!-- PROFILE SECTION -->
+<section id="profile" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Profile</h2>
+      <p class="section-subtitle">Manage your account information</p>
+    </div>
+    <div class="card mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <form id="profileForm">
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input id="profileFirstName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input id="profileLastName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="profileEmail" type="email" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input id="profilePhone" type="tel" class="form-control" readonly>
+          </div>
+         <div class="d-flex justify-content-end gap-2">
+  <button id="editProfileBtn" type="button" class="btn btn-primary" onclick="setEditable(true)">Edit</button>
+  <button id="saveProfileBtn" type="submit" class="btn btn-success d-none">Save</button>
+  <button id="cancelProfileBtn" type="button" class="btn btn-secondary d-none" onclick="setEditable(false)">Cancel</button>
+</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MY TestDrive BOOKINGS SECTION -->
+<section id="my-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Testdrive Bookings</h2>
+      
+    </div>
+    <div id="bookingsContainer">
+      <!-- JS will inject booking cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MY Bike BOOKINGS SECTION -->
+<section id="my-bike-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Bike Bookings</h2>
+      
+    </div>
+    <div id="bikeBookingsContainer" >
+      <!-- JS will inject booking cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MY SERVICES SECTION -->
+<section id="my-services" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Services</h2>
+      <p class="section-subtitle">Your service appointments & history</p>
+    </div>
+    <div id="servicesContainer">
+      <!-- JS will inject service cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-wrench fa-3x mb-3"></i>
+        <p>No service records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS SECTION -->
+<section id="settings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Account Settings</h2>
+      <p class="section-subtitle">Preferences & security</p>
+    </div>
+    <div class="container d-flex justify-content-center mt-5">
+  <div class="row g-4 w-100" style="max-width: 600px;">
+    <!-- Change Password -->
+    <div class="col-md-12">
+      <div class="card p-3 shadow-lg">
+        <h5><i class="fas fa-key me-2"></i>Change Password</h5>
+        <form id="passwordChangeForm" class="mt-3">
+          <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <input id="currentPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input id="newPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm New Password</label>
+            <input id="confirmNewPassword" type="password" class="form-control" required>
+          </div>
+          <button class="btn btn-primary w-100">Update Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+    <!-- Home Section -->
+    <section id="home" class="page-section">
+        <!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <h1 id="bikeTitle"></h1>
+    <h3 id="bikeprice"></h3>
+    <h2 id="bikeSubtitle"></h2>
+    <p id="bikeDesc"></p>
+    <a href="product.html" class="btn-red">VIEW MORE BIKES</a>
+  </div>
+
+  <div class="hero-image">
+    <img id="bikeImage" src="images/1.jpg" alt="Bike">
+  </div>
+
+  
+</section>
+
+
+
+        <!-- Featured Bikes Section 
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Featured Bikes</h2>
+                <p class="section-subtitle">Discover our most popular models</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="images/1.png" alt="Pulsar NS400Z" class="img-fluid">
+                        </div>
+                        <h4>Pulsar NS400Z</h4>
+                        <p class="price">₹1,92,000</p>
+                        <p class="specs">400cc • 30 kmpl • Liquid Cooled</p>
+                        <button class="btn btn-primary" onclick="showBikeDetails('pulsarns400z')">View Details</button>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="images/2.png" alt="Pulsar NS400Z" class="img-fluid">
+                        </div>
+                        <h4>Dominar 400</h4>
+                        <p class="price">₹2,39,000</p>
+                        <p class="specs">373cc • 30 kmpl • USD Forks</p>
+                        <button class="btn btn-primary" onclick="showBikeDetails('dominar400')">View Details</button>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="images/3.png" alt="Pulsar NS400Z" class="img-fluid">
+                        </div>
+                        <h4>Chetak Electric</h4>
+                        <p class="price">₹99,900</p>
+                        <p class="specs">Electric • 155km Range • Smart</p>
+                        <button class="btn btn-primary" onclick="showBikeDetails('chetak')">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- Services Overview -->
+        <div class="services-overview py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title text-white">Our Services</h2>
+                    <p class="section-subtitle text-white">Complete automotive care under one roof</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="service-card text-center">
+                            <i class="fas fa-tools service-icon"></i>
+                            <h4>Service & Repair</h4>
+                            <p>Expert maintenance and repair services</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="service-card text-center">
+                            <i class="fas fa-road service-icon"></i>
+                            <h4>Test Drive</h4>
+                            <p>Experience your dream bike before buying</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="service-card text-center">
+                            <i class="fas fa-file-alt service-icon"></i>
+                            <h4>Easy Booking</h4>
+                            <p>Simple online booking process</p><br>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="service-card text-center">
+                            <i class="fas fa-headset service-icon"></i>
+                            <h4>24/7 Support</h4>
+                            <p>Round the clock customer support</p><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Real experiences from satisfied customers</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Excellent service and genuine parts. My Pulsar has been running smoothly for years!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h5>Rajesh Kumar</h5>
+                            <span>Pulsar 220F Owner</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Great experience with test drive and booking process. Staff is very helpful!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h5>Priya Sharma</h5>
+                            <span>Dominar 400 Owner</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Best dealership in the city. Quick service and honest pricing. Highly recommended!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h5>Amit Singh</h5>
+                            <span>NS200 Owner</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="section-title">About R.K Bajaj</h2>
+                        <p class="lead">Your trusted Bajaj dealership since 1995</p>
+                        <p>R.K Bajaj has been serving customers for over 25 years, providing authentic Bajaj motorcycles, genuine spare parts, and expert service. We are committed to delivering excellence in every aspect of our business.</p>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <h3>10,000+</h3>
+                                    <p>Happy Customers</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <h3>25+</h3>
+                                    <p>Years Experience</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-features">
+                            <div class="feature-item">
+                                <i class="fas fa-award"></i>
+                                <div>
+                                    <h4>Authorized Dealer</h4>
+                                    <p>Official Bajaj dealership with genuine products</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <h4>Expert Team</h4>
+                                    <p>Skilled technicians and sales professionals</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Quick Service</h4>
+                                    <p>Fast and efficient service delivery</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h4 class="footer-title">R.K Bajaj</h4>
+                        <p>Your trusted Bajaj dealership for over 25 years. We provide authentic motorcycles, genuine parts, and expert service.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html" onclick="showSection('home')">Home</a></li>
+                            <li><a href="product.html" onclick="showSection('products')">Products</a></li>
+                            <li><a href="service.html" onclick="showSection('services')">Services</a></li>
+                            <li><a href="contact.html" onclick="showSection('contact')">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Contact Info</h5>
+                        <div class="footer-contact">
+                            <p><i class="fas fa-map-marker-alt"></i> 194, Thiruthangal Road, Cornation Busstop, Sivakasi, Tamil Nadu 626123</p>
+                            <p><i class="fas fa-phone"></i> +91 94422 82881</p>
+                            <p><i class="fas fa-envelope"></i> bikeshowroom162@gmail.com</p>
+                            <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-8PM, Sun: 10AM-6PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 R.K Bajaj. All rights reserved.</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+   <script>
+// Bike data from JSON
+const bikes = [
+    {
+        image: 'images/pulsarns400z_1.png',
+        title: 'Bajaj Pulsar NS400Z',
+        bikeprice: '₹1,92,000',
+        subtitle: 'Experience the Power of 400cc',
+        desc: 'Liquid cooled engine with KTM technology. The ultimate street fighter.'
+    },
+    {
+        image: 'images/dominar400.png',
+        title: 'Bajaj Dominar 400',
+        bikeprice: '₹2,39,000',
+        subtitle: 'Touring Redefined',
+        desc: '373cc engine, touring comfort, and performance for long rides.'
+    },
+    {
+        image: 'images/chetak.png',
+        title: 'Bajaj Chetak Electric',
+        bikeprice: '₹99,900',
+        subtitle: 'Ride into the Future',
+        desc: 'Electric mobility with style, range, and zero emissions.'
+    }
+];
+
+let currentIndex = 0;
+
+function showBike(index, direction = "right") {
+    const bike = bikes[index];
+
+    document.getElementById("bikeTitle").textContent = bike.title;
+    document.getElementById("bikeprice").textContent = bike.bikeprice;
+    document.getElementById("bikeSubtitle").textContent = bike.subtitle;
+    document.getElementById("bikeDesc").textContent = bike.desc;
+
+    const bikeImg = document.getElementById("bikeImage");
+
+    // Apply animation class
+    bikeImg.classList.remove("bike-animate-left", "bike-animate-right");
+    void bikeImg.offsetWidth; // restart animation
+
+    if (direction === "left") {
+        bikeImg.classList.add("bike-animate-left");
+    } else {
+        bikeImg.classList.add("bike-animate-right");
+    }
+
+    // Update image AFTER animation starts
+    setTimeout(() => {
+        bikeImg.src = bike.image;
+    }, 50);
+}
+
+// Navigation functions
+function nextBike() {
+    currentIndex = (currentIndex + 1) % bikes.length;
+    showBike(currentIndex, "right");
+}
+
+function prevBike() {
+    currentIndex = (currentIndex - 1 + bikes.length) % bikes.length;
+    showBike(currentIndex, "left");
+}
+
+// Initial load + Auto slide
+window.onload = () => {
+    showBike(currentIndex);
+    setInterval(nextBike, 3000); // 🔥 Auto switch every 3 sec
+};
+</script>
+
+
+</body>
+</html>

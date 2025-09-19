@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.K Bajaj - Premium Bike Showroom</title>
+    <link rel="icon" type="image/png" href="images/bajaj-icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-motorcycle me-2"></i>R.K BAJAJ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" >Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="product.html" >Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="service.html" >Services</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="contact.html" >Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="help.html" >Help Center</a></li>
+                </ul>
+                <div class="navbar-nav ms-auto" id="authArea">
+         <div id="authButtons" class="d-flex gap-2">
+  <a href="login.html" class="btn btn-outline-light btn-sm">
+    <i class="fas fa-sign-in-alt me-1"></i> Login
+  </a>
+</div>
+
+            
+          </div>
+          <div id="userArea" class="d-none">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-lg text-white me-2"></i>
+                <span id="userDisplayName"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#profile" onclick="showSection('profile')"><i class="fas fa-user me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#my-bookings" onclick="showSection('my-bookings')"><i class="fas fa-calendar me-2"></i>My Testdrive Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-bike-bookings" onclick="showSection('my-bike-bookings')"><i class="fas fa-calendar me-2"></i>My Bike Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-services" onclick="showSection('my-services')"><i class="fas fa-wrench me-2"></i>My Services</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#settings" onclick="showSection('settings')"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+<!-- PROFILE SECTION -->
+<section id="profile" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Profile</h2>
+      <p class="section-subtitle">Manage your account information</p>
+    </div>
+    <div class="card mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <form id="profileForm">
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input id="profileFirstName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input id="profileLastName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="profileEmail" type="email" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input id="profilePhone" type="tel" class="form-control" readonly>
+          </div>
+         <div class="d-flex justify-content-end gap-2">
+  <button id="editProfileBtn" type="button" class="btn btn-primary" onclick="setEditable(true)">Edit</button>
+  <button id="saveProfileBtn" type="submit" class="btn btn-success d-none">Save</button>
+  <button id="cancelProfileBtn" type="button" class="btn btn-secondary d-none" onclick="setEditable(false)">Cancel</button>
+</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MY TestDrive BOOKINGS SECTION -->
+<section id="my-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Testdrive Bookings</h2>
+      
+    </div>
+    <div id="bookingsContainer">
+      <!-- JS will inject booking cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MY Bike BOOKINGS SECTION -->
+<section id="my-bike-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Bike Bookings</h2>
+    </div>
+    <div id="bikeBookingsContainer" >
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MY SERVICES SECTION -->
+<section id="my-services" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Services</h2>
+      <p class="section-subtitle">Your service appointments & history</p>
+    </div>
+    <div id="servicesContainer">
+      <!-- JS will inject service cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-wrench fa-3x mb-3"></i>
+        <p>No service records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS SECTION -->
+<section id="settings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Account Settings</h2>
+      <p class="section-subtitle">Preferences & security</p>
+    </div>
+    <div class="container d-flex justify-content-center mt-5">
+  <div class="row g-4 w-100" style="max-width: 600px;">
+    <!-- Change Password -->
+    <div class="col-md-12">
+      <div class="card p-3 shadow-lg">
+        <h5><i class="fas fa-key me-2"></i>Change Password</h5>
+        <form id="passwordChangeForm" class="mt-3">
+          <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <input id="currentPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input id="newPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm New Password</label>
+            <input id="confirmNewPassword" type="password" class="form-control" required>
+          </div>
+          <button class="btn btn-primary w-100">Update Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- Help Center Section -->
+    <section id="help" class="page-section">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Help Center</h2>
+                <p class="section-subtitle">Find answers to your questions and learn how to use our website</p>
+            </div>
+
+            <!-- Help Search -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-6">
+                    <div class="help-search">
+                        <input type="text" id="helpSearch" class="form-control" placeholder="Search help topics...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Categories -->
+            <div class="help-categories">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="help-category" onclick="showHelpSection('getting-started')">
+                            <i class="fas fa-play-circle"></i>
+                            <h4>Getting Started</h4>
+                            <p>Learn how to navigate and use our website</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="help-category" onclick="showHelpSection('test-drive-help')">
+                            <i class="fas fa-motorcycle"></i>
+                            <h4>Test Drive</h4>
+                            <p>How to book and prepare for test drives</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="help-category" onclick="showHelpSection('booking-help')">
+                            <i class="fas fa-file-contract"></i>
+                            <h4>Bike Booking</h4>
+                            <p>Complete guide to booking your bike</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="help-category" onclick="showHelpSection('service-help')">
+                            <i class="fas fa-tools"></i>
+                            <h4>Service Booking</h4>
+                            <p>How to book and manage service appointments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Content Sections -->
+            <div class="help-content mt-5">
+                <!-- Getting Started -->
+                <div id="getting-started" class="help-section">
+                    <h3 class="mb-4">Getting Started with R.K Bajaj Website</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="help-item">
+                                <h4><i class="fas fa-compass me-2"></i>Navigation</h4>
+                                <p>Use the main navigation menu to explore different sections:</p>
+                                <ul>
+                                    <li><strong>Home:</strong> Main page with featured bikes and services</li>
+                                    <li><strong>Products:</strong> Browse our complete bike collection</li>
+                                    <li><strong>Services:</strong> View service packages and book appointments</li>
+                                    <li><strong>Test Drive:</strong> Book test rides for your chosen bikes</li>
+                                    <li><strong>Booking:</strong> Complete bike purchase process</li>
+                                    <li><strong>Contact:</strong> Get in touch with our team</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="help-item">
+                                <h4><i class="fas fa-search me-2"></i>Product Browsing</h4>
+                                <p>Find your perfect bike easily:</p>
+                                <ul>
+                                    <li>Use category filters to browse by bike type</li>
+                                    <li>Search for specific models using the search box</li>
+                                    <li>Click on bike cards to view detailed specifications</li>
+                                    <li>Compare prices and features across different models</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Drive Help -->
+                <div id="test-drive-help" class="help-section hidden">
+                    <h3 class="mb-4">How to Book a Test Drive</h3>
+                    <div class="steps-container">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Choose Your Bike</h4>
+                                <p>Browse our bike collection and select the model you want to test drive.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Fill the Form</h4>
+                                <p>Complete the test drive booking form with your personal details and preferred date/time.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Requirements</h4>
+                                <p>Ensure you have a valid driving license and are above 18 years of age.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Visit Showroom</h4>
+                                <p>Arrive at the scheduled time with your driving license and photo ID.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Help -->
+                <div id="booking-help" class="help-section hidden">
+                    <h3 class="mb-4">How to Book Your Bike</h3>
+                    <div class="booking-process">
+                        <div class="process-step">
+                            <h4><i class="fas fa-user me-2"></i>Step 1: Personal Details</h4>
+                            <p>Provide your basic personal information including name, contact details, and occupation.</p>
+                        </div>
+                        <div class="process-step">
+                            <h4><i class="fas fa-home me-2"></i>Step 2: Address Details</h4>
+                            <p>Enter your current and permanent address information with complete details.</p>
+                        </div>
+                        <div class="process-step">
+                            <h4><i class="fas fa-id-card me-2"></i>Step 3: Document Details</h4>
+                            <p>Provide government ID numbers including Aadhar, PAN, and Driving License.</p>
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <!-- Service Help -->
+                <div id="service-help" class="help-section hidden">
+                    <h3 class="mb-4">How to Book Service</h3>
+                    <div class="service-guide">
+                        <div class="guide-section">
+                            <h4>Service Types Available</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="service-type">
+                                        <h5>Basic Service - ₹499</h5>
+                                        <p>Essential maintenance including oil change and basic inspection</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-type">
+                                        <h5>Standard Service - ₹899</h5>
+                                        <p>Comprehensive service with brake adjustment and battery check</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-type">
+                                        <h5>Premium Service - ₹1,499</h5>
+                                        <p>Complete engine service with performance tuning</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-type">
+                                        <h5>Major Service - ₹2,499</h5>
+                                        <p>Complete overhaul with detailed inspection</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section mt-5">
+                <h3 class="text-center mb-4">Frequently Asked Questions</h3>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        What documents do I need for bike booking?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        You need Aadhar Card, PAN Card, Driving License, address proof, and income proof for bike booking.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        How long does delivery take after booking?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Delivery typically takes 7-15 days after booking confirmation and document verification.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Can I exchange my old bike?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yes, we accept old bikes in exchange. Our team will evaluate your bike and offer the best exchange value.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        What is the warranty on service work?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        All service work comes with warranty on parts and labor. Warranty period varies by service type.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     
+
+ 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h4 class="footer-title">R.K Bajaj</h4>
+                        <p>Your trusted Bajaj dealership for over 25 years. We provide authentic motorcycles, genuine parts, and expert service.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html" onclick="showSection('home')">Home</a></li>
+                            <li><a href="product.html" onclick="showSection('products')">Products</a></li>
+                            <li><a href="service.html" onclick="showSection('services')">Services</a></li>
+                            <li><a href="contact.html" onclick="showSection('contact')">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Contact Info</h5>
+                        <div class="footer-contact">
+                            <p><i class="fas fa-map-marker-alt"></i> 194, Thiruthangal Road, Cornation Busstop, Sivakasi, Tamil Nadu 626123</p>
+                            <p><i class="fas fa-phone"></i> +91 94422 82881</p>
+                            <p><i class="fas fa-envelope"></i> bikeshowroom162@gmail.com</p>
+                            <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-8PM, Sun: 10AM-6PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 R.K Bajaj. All rights reserved.</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

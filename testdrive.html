@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.K Bajaj - Premium Bike Showroom</title>
+    <link rel="icon" type="image/png" href="images/bajaj-icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      input.form-control:disabled {
+    color: black !important;
+    background-color: #fff; /* optional: make background white */
+    opacity: 1; /* optional: remove grayed-out effect */
+}
+
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-motorcycle me-2"></i>R.K BAJAJ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" >Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="product.html" >Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="service.html" >Services</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="contact.html" >Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="help.html" >Help Center</a></li>
+                </ul>
+                <div class="navbar-nav ms-auto" id="authArea">
+         <div id="authButtons" class="d-flex gap-2">
+  <a href="login.html" class="btn btn-outline-light btn-sm">
+    <i class="fas fa-sign-in-alt me-1"></i> Login
+  </a>
+</div>
+
+            
+          </div>
+          <div id="userArea" class="d-none">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-lg text-white me-2"></i>
+                <span id="userDisplayName"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#profile" onclick="showSection('profile')"><i class="fas fa-user me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#my-bookings" onclick="showSection('my-bookings')"><i class="fas fa-calendar me-2"></i>My Testdrive Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-bike-bookings" onclick="showSection('my-bike-bookings')"><i class="fas fa-calendar me-2"></i>My Bike Bookings</a></li>
+                <li><a class="dropdown-item" href="#my-services" onclick="showSection('my-services')"><i class="fas fa-wrench me-2"></i>My Services</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#settings" onclick="showSection('settings')"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+<!-- PROFILE SECTION -->
+<section id="profile" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Profile</h2>
+      <p class="section-subtitle">Manage your account information</p>
+    </div>
+    <div class="card mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <form id="profileForm">
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input id="profileFirstName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input id="profileLastName" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="profileEmail" type="email" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input id="profilePhone" type="tel" class="form-control" readonly>
+          </div>
+         <div class="d-flex justify-content-end gap-2">
+  <button id="editProfileBtn" type="button" class="btn btn-primary" onclick="setEditable(true)">Edit</button>
+  <button id="saveProfileBtn" type="submit" class="btn btn-success d-none">Save</button>
+  <button id="cancelProfileBtn" type="button" class="btn btn-secondary d-none" onclick="setEditable(false)">Cancel</button>
+</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MY TestDrive BOOKINGS SECTION -->
+<section id="my-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Testdrive Bookings</h2>
+      
+    </div>
+    <div id="bookingsContainer">
+      <!-- JS will inject booking cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MY Bike BOOKINGS SECTION -->
+<section id="my-bike-bookings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Bike Bookings</h2>
+      
+    </div>
+    <div id="bikeBookingsContainer" >
+      <!-- JS will inject booking cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MY SERVICES SECTION -->
+<section id="my-services" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">My Services</h2>
+      <p class="section-subtitle">Your service appointments & history</p>
+    </div>
+    <div id="servicesContainer">
+      <!-- JS will inject service cards here -->
+      <div class="text-center text-muted py-5">
+        <i class="fas fa-wrench fa-3x mb-3"></i>
+        <p>No service records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS SECTION -->
+<section id="settings" class="page-section hidden">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Account Settings</h2>
+      <p class="section-subtitle">Preferences & security</p>
+    </div>
+    <div class="container d-flex justify-content-center mt-5">
+  <div class="row g-4 w-100" style="max-width: 600px;">
+    <!-- Change Password -->
+    <div class="col-md-12">
+      <div class="card p-3 shadow-lg">
+        <h5><i class="fas fa-key me-2"></i>Change Password</h5>
+        <form id="passwordChangeForm" class="mt-3">
+          <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <input id="currentPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input id="newPassword" type="password" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm New Password</label>
+            <input id="confirmNewPassword" type="password" class="form-control" required>
+          </div>
+          <button class="btn btn-primary w-100">Update Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+
+<!-- Test Drive Section -->
+<section id="test-drive" class="page-section">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Book Test Drive</h2>
+      <p class="section-subtitle">Experience your dream bike before you buy</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title text-center mb-4">Test Drive Booking Form</h4>
+            <form id="testDriveForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" name="fullName" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Mobile Number *</label>
+                  <input type="tel" class="form-control" name="mobile" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Email Address *</label>
+                  <input type="email" class="form-control" name="email" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Bike Model *</label>
+                  <input type="text" class="form-control" name="bikeModel" readonly>
+
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Preferred Date *</label>
+                  <input type="date" class="form-control" name="preferredDate" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Preferred Time *</label>
+                  <input type="time" class="form-control" name="preferredTime" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Driving License Number *</label>
+                  <input type="text" class="form-control" name="drivingLicense" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Riding Experience *</label>
+                  <select class="form-select" name="experience" required>
+                    <option value="">Select Experience</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="expert">Expert</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">
+                      I agree to terms and conditions and confirm that I have a valid driving license
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary btn-lg">Book Test Drive</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" style="
+             display:none;
+             position:fixed;
+             top:0;
+             left:0;
+             width:100%;
+             height:100%;
+             background:rgba(0,0,0,0.6);
+             justify-content:center;
+             align-items:center;
+             z-index:9999;
+           ">
+          <div class="text-center text-white">
+            <div class="spinner-border text-light" role="status"></div>
+            <p class="mt-3">Processing your testdrive booking...</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+ 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h4 class="footer-title">R.K Bajaj</h4>
+                        <p>Your trusted Bajaj dealership for over 25 years. We provide authentic motorcycles, genuine parts, and expert service.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html" onclick="showSection('home')">Home</a></li>
+                            <li><a href="product.html" onclick="showSection('products')">Products</a></li>
+                            <li><a href="service.html" onclick="showSection('services')">Services</a></li>
+                            <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="footer-section">
+                        <h5 class="footer-subtitle">Contact Info</h5>
+                        <div class="footer-contact">
+                            <p><i class="fas fa-map-marker-alt"></i> 194, Thiruthangal Road, Cornation Busstop, Sivakasi, Tamil Nadu 626123</p>
+                            <p><i class="fas fa-phone"></i> +91 94422 82881</p>
+                            <p><i class="fas fa-envelope"></i> bikeshowroom162@gmail.com</p>
+                            <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-8PM, Sun: 10AM-6PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 R.K Bajaj. All rights reserved.</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/testdrive.js"></script>
+</body>
+</html>
