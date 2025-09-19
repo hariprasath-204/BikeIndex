@@ -27,7 +27,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
     }
 
     try {
-        const res = await fetch('http://localhost:3000/api/contact', {
+        const res = await fetch('https://bikeindex.onrender.com/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
