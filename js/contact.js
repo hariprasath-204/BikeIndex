@@ -11,23 +11,21 @@ document.getElementById('contactForm').addEventListener('submit', async function
         message: this.elements['message'].value.trim()
     };
 
-    // Required fields check
     if (!formData.name || !formData.phone || !formData.email || !formData.message) {
         alert('Please fill all required fields.');
-        overlay.style.display = "none"; // hide overlay if validation fails
+        overlay.style.display = "none";
         return;
     }
 
-    // Phone validation: only 10 digits
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(formData.phone)) {
         alert('Please enter a valid 10-digit phone number.');
-        overlay.style.display = "none"; // hide overlay if validation fails
+        overlay.style.display = "none";
         return;
     }
 
     try {
-        const res = await fetch('https://bikeindex.onrender.com/api', {
+        const res = await fetch('https://bikeindex.onrender.com/api/contact', { // ✅ updated
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
@@ -45,6 +43,6 @@ document.getElementById('contactForm').addEventListener('submit', async function
         console.error('Front-end fetch error:', err);
         alert('Server error. Please try again later.');
     } finally {
-        overlay.style.display = "none"; // hide overlay
+        overlay.style.display = "none";
     }
 });
