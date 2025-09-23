@@ -234,10 +234,10 @@ app.post("/api/testdrive", async (req, res) => {
       const mailOptionsUser = {
         from: "bikeshowroom162@gmail.com",
         to: email,
-        subject: "Test Drive Booking Confirmation",
+        subject: "Test Drive Booking Details",
         text: `Hi ${full_name},
 
-Your test drive booking is confirmed!
+Your test drive booking is submitted!
 
 Booking Details:
 - Booking ID: ${bookingId}
@@ -509,11 +509,11 @@ app.post('/api/book-service', authenticateToken, (req, res) => {
         const mailOptions = {
           from: '"Bike Showroom" <bikeshowroom162@gmail.com>',
           to: email,
-          subject: 'Service Booking Confirmation',
+          subject: 'Service Booking Details',
           html: `
-            <h3>Service Booking Confirmed!</h3>
+            <h3>Service Booking Details!</h3>
             <p>Dear ${fullName},</p>
-            <p>Your service booking has been confirmed with the following details:</p>
+            <p>Your service booking has been submitted with the following details:</p>
             <ul>
               <li><b>Booking ID:</b> ${bookingId}</li>
               <li><b>Bike Model:</b> ${bikeModel}</li>
@@ -700,7 +700,7 @@ function drawRow(label, value) {
                 const mailOptions = {
                     from: '"Bike Showroom" <bikeshowroom162@gmail.com>',
                     to: email,
-                    subject: "Your Bike Booking Confirmation",
+                    subject: "Your Bike Booking Details",
                     text: `Dear ${fullName},\n\nYour bike booking Details!\n\nBooking ID: ${bookingId}\nBooking Date: ${bookingDate.toISOString().slice(0, 19).replace("T", " ")}\nBike: ${bikeName}\n\nPlease find attached your booking confirmation PDF.\n\nThanks,\nBike Showroom`,
                     attachments: [
                         { filename: `booking_${bookingId}.pdf`, path: pdfPath }
